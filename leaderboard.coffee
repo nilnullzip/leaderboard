@@ -15,7 +15,10 @@ if Meteor.isClient
 
   Template.leaderboard.events
     'click .inc': ->
-      Players.update Session.get('selectedPlayer'), $inc: score: 5
+      Meteor.call 'inc', Session.get('selectedPlayer'), 5
+
+  Template.leaderboard.onCreated ->
+    Meteor.subscribe 'players'
 
   Template.player.helpers
     selected: ->
@@ -25,8 +28,16 @@ if Meteor.isClient
     'click': ->
       Session.set 'selectedPlayer', @_id
 
-# On server startup, create some players if the database is empty.
 if Meteor.isServer
+
+  Meteor.methods
+    inc: (player, count)->
+      Players.update player, $inc: score: count
+
+  Meteor.publish 'players', ->
+    Players.find()
+
+  # On server startup, create some players if the database is empty.
   Meteor.startup ->
     if !Players.find().count()
       for name in ['Ada Lovelace', 'Grace Hopper', 'Marie Curie','Carl Friedrich Gauss','Nikola Tesla','Claude Shannon']
