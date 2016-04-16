@@ -11,9 +11,11 @@ body
     +leaderboard
 
 template(name='leaderboard')
+
   ol.leaderboard
     each players
       +player
+
   if selectedName
     .details
       .name {{selectedName}}
@@ -22,6 +24,7 @@ template(name='leaderboard')
     .message Click a player to select
 
 template(name='player')
+
   li.player(class='{{selected}}')
     span.name {{name}}
     span.score {{score}}
