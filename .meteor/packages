@@ -12,3 +12,5 @@ blaze-html-templates
 standard-minifiers
 mongo
 random
+coffeescript
+mquandalle:jade

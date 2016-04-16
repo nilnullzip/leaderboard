@@ -1,0 +1,27 @@
+head
+  title Leaderboard
+  meta(name='viewport', content='width=device-width, user-scalable=no')
+  link(href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600', rel='stylesheet', type='text/css')
+
+body
+  .outer
+    .logo
+    h1.title Leaderboard
+    .subtitle Select a scientist to give them points
+    +leaderboard
+
+template(name='leaderboard')
+  ol.leaderboard
+    each players
+      +player
+  if selectedName
+    .details
+      .name {{selectedName}}
+      button.inc Add 5 points
+  else
+    .message Click a player to select
+
+template(name='player')
+  li.player(class='{{selected}}')
+    span.name {{name}}
+    span.score {{score}}
